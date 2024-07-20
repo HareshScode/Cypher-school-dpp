@@ -1,0 +1,44 @@
+using System.Collections;
+using UnityEngine;
+
+public class SphereCreator : MonoBehaviour
+{
+    public int numberOfSpheres;
+    public GameObject spherePrefab;
+
+    void Start()
+    {
+        StartCoroutine(CreateSpheres());
+    }
+
+    IEnumerator CreateSpheres()
+    {
+        for (int i = 0; i < numberOfSpheres; i++)
+        {
+            GameObject sphere = Instantiate(spherePrefab, GetRandomPosition(), Quaternion.identity);
+            sphere.GetComponent<Renderer>().material.color = GetRandomColor();
+            yield return null;
+        }
+    }
+
+    Vector3 GetRandomPosition()
+    {
+        return new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0f);
+    }
+
+    Color GetRandomColor()
+    {
+        int randomColorIndex = Random.Range(0, 3);
+        switch (randomColorIndex)
+        {
+            case 0:
+                return Color.red;
+            case 1:
+                return Color.green;
+            case 2:
+                return Color.blue;
+            default:
+                return Color.white;
+        }
+    }
+}
